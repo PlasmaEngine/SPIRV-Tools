@@ -133,7 +133,7 @@ spv_result_t spvOpcodeTableValueLookup(spv_target_env env,
   const auto beg = table->entries;
   const auto end = table->entries + table->count;
 
-  spv_opcode_desc_t needle = {"",    opcode, 0, nullptr, 0,   {},
+  spv_opcode_desc_t needle = {"",    opcode, 0, nullptr, 0,  {},
                               false, false,  0, nullptr, ~0u, ~0u};
 
   auto comp = [](const spv_opcode_desc_t& lhs, const spv_opcode_desc_t& rhs) {
@@ -417,8 +417,10 @@ bool spvOpcodeIsAtomicWithLoad(const SpvOp opcode) {
     case SpvOpAtomicISub:
     case SpvOpAtomicSMin:
     case SpvOpAtomicUMin:
+    case SpvOpAtomicFMinEXT:
     case SpvOpAtomicSMax:
     case SpvOpAtomicUMax:
+    case SpvOpAtomicFMaxEXT:
     case SpvOpAtomicAnd:
     case SpvOpAtomicOr:
     case SpvOpAtomicXor:
@@ -764,4 +766,27 @@ bool spvOpcodeIsBit(SpvOp opcode) {
     default:
       return false;
   }
+}
+
+// ZeroEdit
+spv_result_t spvGetOpcodeNames(spv_target_env env, spv_opcodes_t* opCodes)
+{
+  spv_opcode_table table;
+  spvOpcodeTableGet(&table, SPV_ENV_UNIVERSAL_1_2);
+
+  // Convert each opcode to string
+  opCodes->count = table->count;
+  opCodes->opcode_names = new const char*[opCodes->count + 1];
+  for(size_t i = 0; i < table->count; ++i)
+  {
+    auto entry = table->entries[i];
+    opCodes->opcode_names[i] = spvOpcodeString(entry.opcode);
+  }
+
+  return SPV_SUCCESS;
+}
+
+void spvDestroyOpcodeNames(spv_opcodes_t* opCodes)
+{
+  delete[] opCodes->opcode_names;
 }

@@ -28,8 +28,8 @@
 
 #include "debuginfo.insts.inc"
 #include "glsl.std.450.insts.inc"
-#include "nonsemantic.clspvreflection.insts.inc"
-#include "opencl.debuginfo.100.insts.inc"
+#include "Build/nonsemantic.clspvreflection.insts.inc"
+#include "Build/opencl.debuginfo.100.insts.inc"
 #include "opencl.std.insts.inc"
 
 #include "spirv-tools/libspirv.h"

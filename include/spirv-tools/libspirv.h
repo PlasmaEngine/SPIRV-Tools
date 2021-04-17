@@ -671,7 +671,7 @@ SPIRV_TOOLS_EXPORT void spvOptimizerOptionsSetPreserveSpecConstants(
 // Creates a reducer options object with default options. Returns a valid
 // options object. The object remains valid until it is passed into
 // |spvReducerOptionsDestroy|.
-SPIRV_TOOLS_EXPORT spv_reducer_options spvReducerOptionsCreate();
+SPIRV_TOOLS_EXPORT spv_reducer_options spvReducerOptionsCreate(void);
 
 // Destroys the given reducer options object.
 SPIRV_TOOLS_EXPORT void spvReducerOptionsDestroy(spv_reducer_options options);
@@ -698,7 +698,7 @@ SPIRV_TOOLS_EXPORT void spvReducerOptionsSetTargetFunction(
 // Creates a fuzzer options object with default options. Returns a valid
 // options object. The object remains valid until it is passed into
 // |spvFuzzerOptionsDestroy|.
-SPIRV_TOOLS_EXPORT spv_fuzzer_options spvFuzzerOptionsCreate();
+SPIRV_TOOLS_EXPORT spv_fuzzer_options spvFuzzerOptionsCreate(void);
 
 // Destroys the given fuzzer options object.
 SPIRV_TOOLS_EXPORT void spvFuzzerOptionsDestroy(spv_fuzzer_options options);
@@ -861,6 +861,19 @@ SPIRV_TOOLS_EXPORT spv_result_t spvBinaryParse(
     const spv_const_context context, void* user_data, const uint32_t* words,
     const size_t num_words, spv_parsed_header_fn_t parse_header,
     spv_parsed_instruction_fn_t parse_instruction, spv_diagnostic* diagnostic);
+
+// Zero Edit: C-Api for the optimizer isn't supported yet so here's my implementations
+SPIRV_TOOLS_EXPORT spv_result_t spvOptimizeWithOptions(
+  const spv_const_context context, const spv_optimizer_options options,
+  const spv_const_binary binary, spv_binary* binaryOut, spv_diagnostic* diagnostic);
+
+typedef struct spv_opcodes_t {
+  const char** opcode_names;
+  size_t count;
+} spv_opcodes_t;
+
+SPIRV_TOOLS_EXPORT spv_result_t spvGetOpcodeNames(spv_target_env env, spv_opcodes_t* opCodes);
+SPIRV_TOOLS_EXPORT void spvDestroyOpcodeNames(spv_opcodes_t* opCodes);
 
 #ifdef __cplusplus
 }
