@@ -28,6 +28,7 @@
 #include "source/id_descriptor.h"
 
 #include "source/val/instruction.h"
+#include <limits>
 
 // Base class for MARK-V encoder and decoder. Contains common functionality
 // such as:

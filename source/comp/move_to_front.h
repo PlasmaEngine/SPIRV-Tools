@@ -21,6 +21,8 @@
 #include <set>
 #include <unordered_map>
 #include <vector>
+#include <stdint.h>
+#include <stddef.h>
 
 namespace spvtools {
 namespace comp {
